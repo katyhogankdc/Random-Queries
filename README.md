@@ -1,6 +1,6 @@
 # Random-Queries
 
-//Attendance by Membership - Count of Absent, Tardy, Present 
+```Attendance by Membership - Count of Absent, Tardy, Present 
 
 SELECT 
 
@@ -62,3 +62,5 @@ AND ((cd.date_value BETWEEN '2016-08-08' AND '2017-06-20'))
 GROUP BY e.schoolid, e.grade_level, ac.att_code, ac.presence_status_cd, cd.date_value
 
 order by cd.date_value, e.schoolid, e.grade_level
+
+```
