@@ -1,6 +1,7 @@
 # Random-Queries
 
-```Attendance by Membership - Count of Absent, Tardy, Present 
+```
+--Attendance by Membership - Count of Absent, Tardy, Present 
 
 SELECT 
 
@@ -63,4 +64,25 @@ GROUP BY e.schoolid, e.grade_level, ac.att_code, ac.presence_status_cd, cd.date_
 
 order by cd.date_value, e.schoolid, e.grade_level
 
+```
+```
+--Attendance and Enrollment by Homeroom
+select 
+a.schoolid,
+a.att_date,
+ac.att_code,
+--s.student_number,
+s.grade_level,
+SUM(ac.calculate_ADA_YN) AS Attendance,
+SUM(ac.calculate_ADM_YN) AS Enrollment,
+s.home_room
+from powerschool.powerschool_attendance a
+left join powerschool.powerschool_attendance_code ac on ac.schoolid = a.schoolid and ac.id = a.attendance_codeid
+left join powerschool.powerschool_students s on s.id = a.studentid
+where a.att_mode_code = 'ATT_ModeDaily'
+and s.enroll_status = 0
+and a.yearid = 27
+and a.att_date > '2017-08-01'
+
+group by a.schoolid, a.att_date, ac.att_code, s.grade_level, s.home_room
 ```
