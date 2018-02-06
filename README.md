@@ -86,3 +86,16 @@ and a.att_date > '2017-08-01'
 
 group by a.schoolid, a.att_date, ac.att_code, s.grade_level, s.home_room
 ```
+```
+--Meal Program by Homeroom
+select 
+rm.entry_date, 
+rm.home_room AS Homeroom,
+rm.meal_count as MealCount, 
+rm.meal_type AS MealType,
+sc.abbreviation AS SchoolName
+from u_record_meals rm
+JOIN schools sc on sc.school_number = rm.school_id
+where rm.entry_date > '01-AUG-17'
+order by rm.entry_date, sc.abbreviation, rm.home_room
+```
