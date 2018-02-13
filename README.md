@@ -99,3 +99,29 @@ JOIN schools sc on sc.school_number = rm.school_id
 where rm.entry_date > '01-AUG-17'
 order by rm.entry_date, sc.abbreviation, rm.home_room
 ```
+
+```
+-----Student Retention Information
+SELECT
+lastfirst,
+student_number,
+course_number,
+schoolid,
+count(*)
+FROM (select distinct
+s.student_number,
+s.lastfirst,
+t.yearid,
+cc.course_number,
+s.schoolid
+from cc
+join terms t on t.id = cc.termid 
+join students s on s.id = cc.studentid
+where cc.course_number LIKE '%02' and s.enroll_status = 0
+AND (LENGTH(CC.COURSE_NUMBER) =3 OR CC.COURSE_NUMBER = 'PK02' OR CC.COURSE_NUMBER = 'PS02')
+AND (CC.DATELEFT - CC.DATEENROLLED) > 30
+ORDER BY S.STUDENT_NUMBER) sbq
+group by student_number, lastfirst, course_number, schoolid
+having count(*) > 1
+ORDER BY SCHOOLID;
+```
