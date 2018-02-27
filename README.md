@@ -125,3 +125,35 @@ group by student_number, lastfirst, course_number, schoolid
 having count(*) > 1
 ORDER BY SCHOOLID;
 ```
+
+```
+-------Checking Discrepancies in Meal Program based on Updated Date
+select 
+rm.entry_date, 
+rm.whencreated,
+--rm.home_room AS Homeroom,
+SUM(rm.meal_count) as MealCount, 
+rm.meal_type AS MealType,
+sc.abbreviation AS SchoolName
+from u_record_meals rm
+JOIN schools sc on sc.school_number = rm.school_id
+where rm.entry_date between '12-feb-18' and '26-feb-18'
+and sc.abbreviation = 'Quest'
+group by sc.abbreviation, rm.meal_type, rm.entry_date, rm.whencreated
+order by rm.entry_date, sc.abbreviation;
+```
+
+```
+--------Aggregated Meal Data 
+select 
+rm.entry_date, 
+--rm.home_room AS Homeroom,
+SUM(rm.meal_count) as MealCount, 
+rm.meal_type AS MealType,
+sc.abbreviation AS SchoolName
+from u_record_meals rm
+JOIN schools sc on sc.school_number = rm.school_id
+where rm.entry_date >= '03-AUG-17'
+group by sc.abbreviation, rm.meal_type, rm.entry_date
+order by rm.entry_date, sc.abbreviation;
+```
