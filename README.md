@@ -164,7 +164,7 @@ select
 s.lastfirst as StudentName,
 s.student_number as StudentNumber,
 sib.lastfirst, 
-sib.student_number
+sib.student_number,
 p.relationship, 
 p.name,
 p.type
@@ -179,21 +179,14 @@ from
     parent2_relationship AS Relationship, 
     parent2 AS Name,
     'Parent 2' AS Type
-    from u_students us))p 
+    from u_students us))p
 join 
-    ((select studentsdcid, 
-    parent1_relationship AS Relationship, 
-    parent1 AS Name,
-    'Parent 1' AS type
-    from u_students us)
-    UNION 
-    (select studentsdcid, 
-    parent2_relationship AS Relationship, 
-    parent2 AS Name,
-    'Parent 2' AS Type
-    from u_students us))sib
+    (select lastfirst, student_number
+    from students s
+    join u_students us on us.studentsdcid = s.dcid)sib
 join students s on s.dcid = p.studentsdcid
 where s.enroll_status = 0
+and s.student_number != sib.student_number 
 and p.name != '(null)'
 order by s.lastfirst; 
 ```
