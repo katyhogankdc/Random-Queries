@@ -157,3 +157,44 @@ where rm.entry_date >= '03-AUG-17'
 group by sc.abbreviation, rm.meal_type, rm.entry_date
 order by rm.entry_date, sc.abbreviation;
 ```
+
+```
+--------------Matching Siblings
+select
+s.lastfirst as StudentName,
+s.student_number as StudentNumber,
+sib.lastfirst, 
+sib.student_number
+p.relationship, 
+p.name,
+p.type
+from 
+    ((select studentsdcid, 
+    parent1_relationship AS Relationship, 
+    parent1 AS Name,
+    'Parent 1' AS type
+    from u_students us)
+    UNION 
+    (select studentsdcid, 
+    parent2_relationship AS Relationship, 
+    parent2 AS Name,
+    'Parent 2' AS Type
+    from u_students us))p 
+join 
+    ((select studentsdcid, 
+    parent1_relationship AS Relationship, 
+    parent1 AS Name,
+    'Parent 1' AS type
+    from u_students us)
+    UNION 
+    (select studentsdcid, 
+    parent2_relationship AS Relationship, 
+    parent2 AS Name,
+    'Parent 2' AS Type
+    from u_students us))sib
+join students s on s.dcid = p.studentsdcid
+where s.enroll_status = 0
+and p.name != '(null)'
+order by s.lastfirst; 
+```
+
