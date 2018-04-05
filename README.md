@@ -161,33 +161,240 @@ order by rm.entry_date, sc.abbreviation;
 ```
 --------------Matching Siblings
 select
-s.lastfirst as StudentName,
-s.student_number as StudentNumber,
-sib.lastfirst, 
-sib.student_number,
-p.relationship, 
+p.lastfirst as StudentName,
+p.student_number as StudentNumber,
+p.schoolid AS StudentSchool,
+sib.lastfirst AS SiblingName,
+sib.student_number AS SiblingStudentNumber,
+sib.schoolid AS SiblingSchool,
+p.relationship,
 p.name,
 p.type
-from 
-    ((select studentsdcid, 
-    parent1_relationship AS Relationship, 
-    parent1 AS Name,
-    'Parent 1' AS type
-    from u_students us)
+from
+    ((select studentsdcid,
+    parent1_relationship AS Relationship,
+    CONCAT(parent1_last, parent1_first) AS Name,
+    lastfirst, 
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 1' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
     UNION 
     (select studentsdcid, 
     parent2_relationship AS Relationship, 
-    parent2 AS Name,
+    CONCAT(parent2_last, parent2_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
     'Parent 2' AS Type
-    from u_students us))p
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent3_relationship AS Relationship, 
+    CONCAT(parent3_last, parent3_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 3' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent4_relationship AS Relationship, 
+    CONCAT(parent4_last, parent4_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 4' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent5_relationship AS Relationship, 
+    CONCAT(parent5_last, parent5_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,   
+    'Parent 5' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent6_relationship AS Relationship, 
+    CONCAT(parent6_last, parent6_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 6' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent7_relationship AS Relationship, 
+    CONCAT(parent7_last, parent7_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 7' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent8_relationship AS Relationship, 
+    CONCAT(parent8_last, parent8_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 8' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent9_relationship AS Relationship, 
+    CONCAT(parent9_last, parent9_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 9' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent10_relationship AS Relationship, 
+    CONCAT(parent10_last, parent10_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 10' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid))p
 join 
-    (select lastfirst, student_number
-    from students s
-    join u_students us on us.studentsdcid = s.dcid)sib
-join students s on s.dcid = p.studentsdcid
-where s.enroll_status = 0
-and s.student_number != sib.student_number 
+    ((select studentsdcid,
+    parent1_relationship AS Relationship,
+    CONCAT(parent1_last, parent1_first) AS Name,
+    lastfirst, 
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 1' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+    UNION 
+    (select studentsdcid, 
+    parent2_relationship AS Relationship, 
+    CONCAT(parent2_last, parent2_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 2' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent3_relationship AS Relationship, 
+    CONCAT(parent3_last, parent3_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 3' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent4_relationship AS Relationship, 
+    CONCAT(parent4_last, parent4_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 4' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent5_relationship AS Relationship, 
+    CONCAT(parent5_last, parent5_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 5' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent6_relationship AS Relationship, 
+    CONCAT(parent6_last, parent6_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 6' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent7_relationship AS Relationship, 
+    CONCAT(parent7_last, parent7_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 7' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent8_relationship AS Relationship, 
+    CONCAT(parent8_last, parent8_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 8' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent9_relationship AS Relationship, 
+    CONCAT(parent9_last, parent9_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 9' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid)
+UNION
+    (select studentsdcid, 
+    parent10_relationship AS Relationship, 
+    CONCAT(parent10_last, parent10_first) AS Name,
+    lastfirst,
+    student_number,
+    enroll_status,
+    schoolid,
+    'Parent 10' AS Type
+    from u_students us
+    join students s on s.dcid = us.studentsdcid))sib on p.name = sib.name --and p.relationship = sib.relationship
+where p.enroll_status = 0
+and sib.enroll_status = 0
+and p.student_number != sib.student_number 
 and p.name != '(null)'
-order by s.lastfirst; 
+and sib.name != '(null)'
+order by p.lastfirst; 
 ```
 
